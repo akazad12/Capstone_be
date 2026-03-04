@@ -5,7 +5,7 @@ const router = express.Router();
 
 //Create
 router.route('/buy')
-.put(async (req,res) =>{
+.post(async (req,res) =>{
     const {userId, assetId, quantity, price} = req.body
     try{
         let portfolio = await Portfolio.findOne({user: userId});
@@ -43,25 +43,57 @@ router.route('/buy')
     } catch(err) {
         res.status(404).json({ error: err.message})
     }
-})
+});
+router.route('/sell')
+.post(async (req,res) =>{
+    const {userId, assetId, quantity} = req.body;
+    try{
+        let portfolio = await Portfolio.findOne({user: userID})
+        if (!portfolio) {
+            return res.status(404).json({message: "Portfolio not found"})
+        }
+
+        const assetExists = portfolio.holdings.find(
+            h => h.asset.toString() === assetId
+        )
+        if (!assetExists) {
+            return res.status(400).json({message: "Asset not owned"})
+        }
+        //Remove asset from portfollio if quantity = 0
+        assetExists.totalAmount-=quantity;
+        if (assetExists.totalAmount = 0){
+            portfolio.holdings = portfolio.holdings.filter(
+                h => h.asset.toString() !== assetId
+            )
+        }
+        await portfolio.save();
+        res.json(portfolio);
+
+
+    } catch (error) {
+        res.status(500).json(({error: error.message}))
+    }
+
+});
+
 
 //Read
 //Route to get the User Portfolio
-router.route('/userId')
+router.route('/:userId')
 .get(async (req,res) =>{
     try{
         let portfolio = await Portfolio.findOne({user: req.params.userId,})
-        .populate("holdings.asset");
+        // .populate("holdings.asset");
 
         if (!portfolio) {
-            return res.status(400).json({nessage: 'Portfolio not found'})
+            return res.status(400).json({message: 'Portfolio not found'})
         }
         res.json(portfolio);
 
-    } catch(err) {
-        return res.status(500).json({ error: message})
+    } catch(error) {
+        return res.status(500).json({ error: error.message})
     }
-})
+});
 
 //Update
 
