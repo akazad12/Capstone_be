@@ -1,7 +1,8 @@
 //Imports
 import express from 'express';
 import dotenv from 'dotenv';
-import {globalErr} from "./middleware/middlewares.js"
+import {globalErr, logReq} from "./middleware/middlewares.js"
+import portfolio from "./routes/portfolio.js"
 
 
 //Setups
@@ -11,9 +12,13 @@ const PORT = process.env.PORT || 3000;
 
 //Middleware
 app.use(express.json());
+app.use(logReq);
+
 
 
 //Routes
+app.use("/api/portfolios",portfolio)
+
 
 //Global Middleware
 app.use(globalErr);

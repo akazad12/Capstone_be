@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const accountType = ["traditional", "modern"];
 
 const portfolioSchema = new mongoose.Schema({
-  portfID: {
+  user: {
     type: mongoose.Types.ObjectId,
-    ref: "Portfolio",
+    ref: "User",
     required: true,
+    unique:  true,
   },
   holdings: [
     { 
