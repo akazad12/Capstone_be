@@ -1,5 +1,9 @@
-export function logReq(req,res,next){
-    console.log(`${req.method} -- ${req.url} -- ${new Date().toLocaleTimeString}`,)
+export function logReq(req, res, next) {
+    console.log(`${req.method} -- ${req.url} -- ${new Date().toLocaleTimeString}`,
+    );
+    if (req.body) console.table(req.body);
+
+    next()
 }
 
 export function globalErr(err,_req,res,_next){
