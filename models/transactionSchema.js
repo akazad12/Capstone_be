@@ -8,7 +8,7 @@ const transSchema = new mongoose.Schema({
   },
   assetID: {
     type: mongoose.Types.ObjectId,
-    ref: "Stock",
+    ref: "Asset",
     required: true,
   },
   action: {

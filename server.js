@@ -6,6 +6,7 @@ import connectDB from "./db/conn.js"
 import portfolioRoutes from "./routes/portfolioRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import assetRoutes from "./routes/assetRoutes.js"
+import transactionRoutes from "./routes/transactionRoutes.js"
 
 
 //Setups
@@ -21,9 +22,10 @@ app.use(logReq);
 
 
 //Routes
-app.use("/api/portfolio",portfolioRoutes)
-app.use("/api/users", userRoutes)
-app.use("/api/assets",assetRoutes)
+app.use("/api/portfolio",portfolioRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/assets",assetRoutes);
+app.use('/api/transactions',transactionRoutes);
 
 
 
