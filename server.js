@@ -5,6 +5,7 @@ import {globalErr, logReq} from "./middleware/middlewares.js"
 import connectDB from "./db/conn.js"
 import portfolioRoutes from "./routes/portfolioRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import assetRoutes from "./routes/assetRoutes.js"
 
 
 //Setups
@@ -22,6 +23,7 @@ app.use(logReq);
 //Routes
 app.use("/api/portfolio",portfolioRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/assets",assetRoutes)
 
 
 
