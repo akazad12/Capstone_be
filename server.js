@@ -7,8 +7,7 @@ import portfolioRoutes from "./routes/portfolioRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import assetRoutes from "./routes/assetRoutes.js"
 import transactionRoutes from "./routes/transactionRoutes.js"
-
-
+import watchListRoutes from "./routes/watchListRoutes.js";
 //Setups
 dotenv.config()
 const app = express()
@@ -26,6 +25,7 @@ app.use("/api/portfolio",portfolioRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/assets",assetRoutes);
 app.use('/api/transactions',transactionRoutes);
+app.use('/api/watchList',watchListRoutes);
 
 
 

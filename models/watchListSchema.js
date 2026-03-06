@@ -14,3 +14,5 @@ const WatchListSchema = new mongoose.Schema({
     },
   ],
 });
+
+export default mongoose.model("WatchList", WatchListSchema)
