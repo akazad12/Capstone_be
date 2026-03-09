@@ -27,6 +27,30 @@ router.route('/signup')
     }
 })
 
+router.route('/signup')
+.post(async (req,res)=> {
+    try{
+        const {  email, password } = req.body;
+        
+        //find by user email
+        const user = await User.findOne({email})
+        if (!user){
+            return res.json({error: "invalid email or password"})
+        }
+        //check password
+        const passwordChecker = await bcrypt.compare(password,user.password)
+        if (!passwordChecker){
+            return res.json({error: "invalid email or password"});
+        }
+        res.json({
+            message: 'Login Succesful',
+            user
+        })
+    } catch(err){
+        res.status(400).json({error: err.message})
+    }
+})
+
 //get all users
 .get(async (req,res)=> {
     const users = await User.find();
