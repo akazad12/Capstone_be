@@ -1,6 +1,6 @@
 import express from 'express';
 import User from "../models/userSchema.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 
 const router = express.Router();
@@ -8,8 +8,9 @@ const router = express.Router();
 //Create user
 router.route('/signup')
 .post(async (req,res)=> {
+
     try{
-        const { username, email, password } = req.body;
+        const { name, email, password } = req.body;
         //check if email/user exists
         const userExists = await User.findOne({email});
         if (userExists) {
@@ -19,7 +20,7 @@ router.route('/signup')
         const hashedPassword = await bcrypt.hash(password,10)
         //create User
         const user = await User.create({
-            username,
+            name,
             email,
             password: hashedPassword
         })
