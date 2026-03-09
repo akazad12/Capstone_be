@@ -1,14 +1,27 @@
 import express from 'express';
-import User from "../models/userSchema.js"
+import User from "../models/userSchema.js";
+import bcrypt from "bcrypt.js";
 
 
 const router = express.Router();
 
 //Create user
-router.route('/')
+router.route('/signup')
 .post(async (req,res)=> {
     try{
-        const user = await User.create(req.body)
+        const { username, email, password } = req.body;
+        // hashPassword
+        const hashedPassword = await bcrypt.hash(password,10)
+        //create User
+        const user = await User.create({
+            username,
+            email,
+            password: hashedPassword
+        })
+        res.json({
+        message: "Created User",
+        user
+        });
     } catch(err){
         res.status(400).json({error: err.message})
     }
