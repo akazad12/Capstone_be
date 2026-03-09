@@ -1,6 +1,7 @@
 import express from 'express';
 import User from "../models/userSchema.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 
 const router = express.Router();
@@ -12,7 +13,13 @@ router.route('/signup')
     try{
         const { name, email, password } = req.body;
         //check if email/user exists
-        const userExists = await User.findOne({email});
+        if (!name || !email || !password) {
+            return res.json({ error: "All fields are required" });
+        }
+
+        const nEmail = email.toLowerCase();
+
+        const userExists = await User.findOne({email: nEmail});
         if (userExists) {
             return res.json({error: "User already exists"})
         }
@@ -24,16 +31,22 @@ router.route('/signup')
             email,
             password: hashedPassword
         })
+        // Create JWT token
+        const token = jwt.sign(
+            { id: user._id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
         res.json({
         message: "Created User",
-        user
+        user, token
         });
     } catch(err){
         res.status(400).json({error: err.message})
     }
 })
 
-router.route('/signup')
+router.route('/login')
 .post(async (req,res)=> {
     try{
         const {  email, password } = req.body;
@@ -45,12 +58,14 @@ router.route('/signup')
         }
         //check password
         const passwordChecker = await bcrypt.compare(password,user.password)
+        console.log(passwordChecker)
         if (!passwordChecker){
             return res.json({error: "invalid email or password"});
         }
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         res.json({
             message: 'Login Succesful',
-            user
+            user,token
         })
     } catch(err){
         res.status(400).json({error: err.message})
