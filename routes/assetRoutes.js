@@ -46,7 +46,6 @@ router
           const assetData = {
             symbol: symbol.toUpperCase(),
             name: data.name,
-            type: "STOCK", //++++++++++++++++Temporary place holder type has to be dynamic +++++++++++++++
             exchange: data.exchange,
             currentPrice: quote.data.c,
             marketCap: data.marketCapitalization,

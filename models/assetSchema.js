@@ -10,10 +10,6 @@ const assetSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    type: {
-        type: String,
-        enum: ['STOCK','ETF','CRYPTO']
-    },
     exchange: {
         type: String,
         required: true,
