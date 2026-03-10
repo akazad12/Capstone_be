@@ -1,13 +1,13 @@
 import express from 'express';
 import WatchList from "../models/watchListSchema.js";
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 
 
 //add stock to watchlist
 router
-.route("/users/:userId/watchlist/:assetId")
+.route("/:assetId")
 .post(async(req,res)=>{
     try {
         const watchlist = await WatchList
@@ -24,7 +24,7 @@ router
 });
 //Get users watchlist
 router
-.route("/users/:userId/watchlist")
+.route("/")
 .get(async(req,res)=>{
     try {
         const watchlist = await WatchList
@@ -37,7 +37,7 @@ router
   }
 });
 //Remove stock from watch list
-router.route('/users/:userId/watchlist/:assetId')
+router.route('/:assetId')
 .delete(async(req,res)=>{
     try{
         const watchlist = await WatchList

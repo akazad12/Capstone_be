@@ -28,7 +28,7 @@ app.use("/api/portfolio",portfolioRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/assets",assetRoutes);
 app.use('/api/transactions',transactionRoutes);
-app.use('/api/watchList',watchListRoutes);
+app.use('/api/users/:userId/watchlist',watchListRoutes);
 
 
 
