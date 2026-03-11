@@ -1,4 +1,6 @@
 # Capstone Backend API
+## [Frontend Repository](https://github.com/akazad12/Capstone_fe)  
+*Click here to view the frontend for this project.*
 
 This repository contains the backend API for the **Capstone Stock Portfolio Tracker** project. It’s a RESTful API built with **Node.js**, **Express**, and **MongoDB** that supports authentication, user watchlists, assets, portfolio tracking, transactions, and live stock pricing integration.
 
